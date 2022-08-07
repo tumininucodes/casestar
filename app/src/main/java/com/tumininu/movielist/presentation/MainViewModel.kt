@@ -29,7 +29,7 @@ class MainViewModel : ViewModel() {
                 if (response.isSuccessful && response.body() != null) {
                     _movies.postValue(NetworkResult.Success(response.body()!!))
                 } else {
-                    _movies.postValue(NetworkResult.Error(Throwable("Error fetching movies")))
+                    _movies.postValue(NetworkResult.Error(Throwable("Something went wrong. Please try again")))
                 }
             } catch (e: Exception) {
                 _movies.postValue(NetworkResult.Error(Throwable("Error fetching movies")))
