@@ -1,5 +1,6 @@
 package com.tumininu.movielist.presentation.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.tumininu.movielist.R
 import com.tumininu.movielist.model.Movie
 
-class MovieAdapter : ListAdapter<Movie, MovieAdapter.ViewHolder>(MOVIE_COMPARATOR) {
+class MovieAdapter(val context: Context) :
+    ListAdapter<Movie, MovieAdapter.ViewHolder>(MOVIE_COMPARATOR) {
 
     companion object {
         private val MOVIE_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
@@ -34,10 +37,12 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.ViewHolder>(MOVIE_COMPARATO
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = getItem(position)
+        Glide.with(context).load("https://image.tmdb.org/t/p/original" + movie.poster_path)
+            .into(holder.image)
         holder.title.text = movie.title
         holder.overview.text = movie.overview
-        holder.releaseDate.text = movie.release_date
-        holder.voteCount.text = movie.vote_count.toString()
+        holder.releaseDate.text = context.getString(R.string.release_date, movie.release_date)
+        holder.voteCount.text = context.getString(R.string.vote, movie.vote_count.toString())
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
