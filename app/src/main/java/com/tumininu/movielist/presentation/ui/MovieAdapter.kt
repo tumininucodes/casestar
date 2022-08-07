@@ -1,4 +1,4 @@
-package com.tumininu.movielist
+package com.tumininu.movielist.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.tumininu.movielist.R
+import com.tumininu.movielist.model.Movie
 
 class MovieAdapter : ListAdapter<Movie, MovieAdapter.ViewHolder>(MOVIE_COMPARATOR) {
 

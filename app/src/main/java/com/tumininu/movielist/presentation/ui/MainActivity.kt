@@ -1,7 +1,8 @@
-package com.tumininu.movielist
+package com.tumininu.movielist.presentation.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.tumininu.movielist.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
