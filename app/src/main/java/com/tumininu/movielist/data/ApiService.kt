@@ -15,7 +15,7 @@ interface ApiService {
     suspend fun fetchMovies(
         @Query("api_key") apiKey: String = "703b66873479afc02f4d7afd1ae87125",
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("page") page: Int
     ): Response<MovieResponse>
 }
 

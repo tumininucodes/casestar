@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tumininu.movielist.databinding.ActivityMainBinding
 import com.tumininu.movielist.model.NetworkResult
 import com.tumininu.movielist.presentation.MainViewModel
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private val adapter = MovieAdapter(this)
+    private var page = 1
+    private val layoutManager = LinearLayoutManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +33,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.getMovies().observe(this) { networkResult ->
             when (networkResult) {
                 is NetworkResult.Loading -> {
-                    binding.mainProgressBar.visibility = View.VISIBLE
-                    binding.fetchMoreProgressBar.visibility = View.GONE
+                    if (viewModel.moviesList.isNotEmpty()) {
+                        binding.fetchMoreProgressBar.visibility = View.VISIBLE
+                    }
                 }
                 is NetworkResult.Success -> {
+                    viewModel.moviesList.addAll(networkResult.data.results!!)
+                    adapter.submitList(viewModel.moviesList)
+                    val scrollPosition =
+                        viewModel.moviesList.size - networkResult.data.results!!.size - 1
+                    layoutManager.scrollToPosition(scrollPosition)
+                    binding.rvMovies.layoutManager = layoutManager
                     binding.rvMovies.adapter = adapter
-                    binding.rvMovies.layoutManager = LinearLayoutManager(this)
                     binding.rvMovies.setHasFixedSize(true)
-                    adapter.submitList(networkResult.data.results)
                     binding.mainProgressBar.visibility = View.GONE
                     binding.fetchMoreProgressBar.visibility = View.GONE
                 }
@@ -49,6 +57,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.rvMovies.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (recyclerView.canScrollVertically(1).not() && dy > 1) {
+                    page += 1
+                    viewModel.fetchMovies(
+                        page
+                    )
+                    binding.fetchMoreProgressBar.visibility = View.VISIBLE
+                }
+            }
+        })
 
     }
 }

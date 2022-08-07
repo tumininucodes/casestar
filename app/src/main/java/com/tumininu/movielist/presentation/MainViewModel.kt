@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tumininu.movielist.data.ApiClient
+import com.tumininu.movielist.model.Movie
 import com.tumininu.movielist.model.MovieResponse
 import com.tumininu.movielist.model.NetworkResult
 import kotlinx.coroutines.Dispatchers
@@ -14,16 +15,17 @@ class MainViewModel : ViewModel() {
 
     private var _movies = MutableLiveData<NetworkResult<MovieResponse>>()
     private val movies: LiveData<NetworkResult<MovieResponse>> = _movies
+    val moviesList = mutableListOf<Movie>()
 
     init {
         fetchMovies()
     }
 
-    private fun fetchMovies() {
+    fun fetchMovies(page: Int = 1) {
         try {
             viewModelScope.launch(Dispatchers.IO) {
                 _movies.postValue(NetworkResult.Loading)
-                val response = ApiClient.retrofitService.fetchMovies()
+                val response = ApiClient.retrofitService.fetchMovies(page = page)
                 if (response.isSuccessful && response.body() != null) {
                     _movies.postValue(NetworkResult.Success(response.body()!!))
                 } else {
