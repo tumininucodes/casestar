@@ -1,6 +1,7 @@
 package com.tumininu.movielist
 
 data class Movie(
+    var id: Int = 0,
     var title: String = "",
     var overview: String?,
     var release_date: String?,

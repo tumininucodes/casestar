@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:text="Title"
                     android:textStyle="bold"
@@ -46,19 +47,22 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/overview"
                     android:layout_width="wrap_content"
-                    android:text="Description"
+                    android:text="Overview"
                     android:maxLines="4"
                     android:textSize="14sp"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/releaseDate"
                     android:layout_width="wrap_content"
                     android:text="Release Date:"
                     android:textSize="14sp"
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/vote"
                     android:layout_width="wrap_content"
                     android:text="Vote:"
                     android:textSize="14sp"
