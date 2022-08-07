@@ -22,8 +22,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun fetchMovies(page: Int = 1) {
-        try {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
                 _movies.postValue(NetworkResult.Loading)
                 val response = ApiClient.retrofitService.fetchMovies(page = page)
                 if (response.isSuccessful && response.body() != null) {
@@ -31,11 +31,10 @@ class MainViewModel : ViewModel() {
                 } else {
                     _movies.postValue(NetworkResult.Error(Throwable("Error fetching movies")))
                 }
+            } catch (e: Exception) {
+                _movies.postValue(NetworkResult.Error(Throwable("Error fetching movies")))
             }
-        } catch (e: Exception) {
-            _movies.postValue(NetworkResult.Error(Throwable("Error fetching movies")))
         }
-
     }
 
     fun getMovies(): LiveData<NetworkResult<MovieResponse>> {
