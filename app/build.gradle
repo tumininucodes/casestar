@@ -69,6 +69,9 @@ dependencies {
     implementation "androidx.compose.runtime:runtime:1.2.1"
     implementation "androidx.compose.ui:ui:1.2.1"
 
+    // Accompanist System UI controller
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
