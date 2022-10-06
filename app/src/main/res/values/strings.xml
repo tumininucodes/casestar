@@ -2,5 +2,5 @@
     <string name="app_name">Casestar</string>
     <string name="release_date">Release Date: %1$s</string>
     <string name="vote">Vote: %1$s</string>
-    <string name="title_activity_shell">ShellActivity</string>
+    <string name="title_activity_shell">Casestar</string>
 </resources>
