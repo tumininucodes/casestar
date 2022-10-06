@@ -14,13 +14,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieList">
         <activity
-            android:name=".presentation.ui.MainActivity"
-            android:exported="true">
+            android:name=".presentation.ShellActivity"
+            android:exported="true"
+            android:label="@string/title_activity_shell"
+            android:theme="@style/Theme.MovieList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.ui.MainActivity"
+            android:exported="true">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
     </application>
 
