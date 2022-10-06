@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.tumininu.movielist.presentation.ui.home.HomeView
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 
 class ShellActivity : ComponentActivity() {
@@ -22,22 +23,9 @@ class ShellActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    HomeView()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MovieListTheme {
-        Greeting("Android")
     }
 }

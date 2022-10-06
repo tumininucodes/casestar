@@ -11,7 +11,7 @@ import com.tumininu.movielist.model.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private var _movies = MutableLiveData<NetworkResult<MovieResponse>>()
     private val movies: LiveData<NetworkResult<MovieResponse>> = _movies
