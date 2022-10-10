@@ -77,6 +77,9 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
+    // Landscapist: Image loading library for glide, fresco and coil
+    implementation "com.github.skydoves:landscapist-glide:2.0.0"
+
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
