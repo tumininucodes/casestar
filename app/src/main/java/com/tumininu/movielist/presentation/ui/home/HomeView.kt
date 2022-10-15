@@ -30,7 +30,10 @@ fun HomeView(modifier: Modifier = Modifier) {
         }
     }) { padding ->
         val data = viewModel.getMovies().collectAsState()
-        Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center
+        ) {
             when (data.value) {
                 is NetworkResult.Loading -> {
                     CircularProgressIndicator(
