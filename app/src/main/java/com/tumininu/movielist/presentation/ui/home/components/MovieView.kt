@@ -13,23 +13,26 @@ import androidx.compose.ui.unit.sp
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.tumininu.movielist.R
+import com.tumininu.movielist.model.Movie
 
 @Composable
-fun MovieView(modifier: Modifier = Modifier) {
+fun MovieView(movie: Movie, modifier: Modifier = Modifier) {
     Card(modifier = modifier.padding(top = 8.dp, bottom = 8.dp)) {
-        Column {
+        Column(modifier = modifier
+            .width(120.dp)
+            .padding(0.dp)) {
             GlideImage(
-                imageModel = "https://images.news18.com/ibnlive/uploads/2022/07/thor-love-and-thunder.jpg",
+                imageModel = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                 imageOptions = ImageOptions(contentScale = ContentScale.Crop),
                 modifier = modifier
-                    .width(120.dp)
+                    .width(125.dp)
                     .height(200.dp)
                     .align(Alignment.CenterHorizontally),
                 previewPlaceholder = R.drawable.image,
             )
             Spacer(modifier = modifier.height(8.dp))
             Text(
-                text = "Movie title",
+                text = movie.title,
                 fontSize = 11.sp,
                 maxLines = 1,
                 modifier = modifier
@@ -41,8 +44,8 @@ fun MovieView(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
-@Composable
-fun ComposablePreview() {
-    MovieView()
-}
+//@Preview
+//@Composable
+//fun ComposablePreview() {
+//    MovieView()
+//}

@@ -3,10 +3,8 @@ package com.tumininu.movielist.presentation.ui.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -14,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tumininu.movielist.model.NetworkResult
 import com.tumininu.movielist.presentation.HomeViewModel
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
@@ -26,15 +25,17 @@ fun HomeView(modifier: Modifier = Modifier) {
     Scaffold(topBar = {
         TopAppBar {
             Spacer(modifier = modifier.width(8.dp))
-            Text(text = "Casestar")
+            Text(text = "Casestar", fontSize = 22.sp)
         }
     }) { padding ->
-        val data = viewModel.getMovies().collectAsState()
+        val data = viewModel.getMovies().collectAsState().value
         Column(
-            modifier = modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center
+            modifier = modifier
+                .fillMaxSize()
+                .padding(padding),
+            verticalArrangement = Arrangement.Center,
         ) {
-            when (data.value) {
+            when (data) {
                 is NetworkResult.Loading -> {
                     CircularProgressIndicator(
                         modifier = modifier.align(Alignment.CenterHorizontally)
@@ -44,10 +45,10 @@ fun HomeView(modifier: Modifier = Modifier) {
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(3),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = modifier.padding(start = 16.dp, end = 16.dp)
+                        contentPadding = PaddingValues(8.dp)
                     ) {
-                        items(30) {
-                            MovieView()
+                        items(data.data.results) { movie ->
+                            MovieView(movie)
                         }
                     }
                 }
@@ -57,6 +58,12 @@ fun HomeView(modifier: Modifier = Modifier) {
                             .align(Alignment.CenterHorizontally),
                         textAlign = TextAlign.Center
                     )
+                    Button(
+                        onClick = { viewModel.fetchMovies() },
+                        modifier = modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        Text(text = "Retry")
+                    }
                 }
             }
         }

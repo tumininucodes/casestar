@@ -25,6 +25,7 @@ class HomeViewModel : ViewModel() {
     fun fetchMovies(page: Int = 1) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                _movies.value = NetworkResult.Loading
                 val response = ApiClient.retrofitService.fetchMovies(page = page)
                 if (response.isSuccessful && response.body() != null) {
                     _movies.value = NetworkResult.Success(response.body()!!)
