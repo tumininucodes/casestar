@@ -32,37 +32,37 @@ class MainActivity : AppCompatActivity() {
         )[HomeViewModel::class.java]
 
         if (NetworkUtil.isNetworkAvailable(this)) {
-            viewModel.getMovies().observe(this) { networkResult ->
-                when (networkResult) {
-                    is NetworkResult.Loading -> {
-                        if (viewModel.moviesList.isNotEmpty()) {
-                            binding.fetchMoreProgressBar.visibility = View.VISIBLE
-                        }
-                    }
-                    is NetworkResult.Success -> {
-                        viewModel.moviesList.addAll(networkResult.data.results!!)
-                        adapter.submitList(viewModel.moviesList)
-                        val scrollPosition =
-                            viewModel.moviesList.size - networkResult.data.results!!.size - 1
-                        layoutManager.scrollToPosition(scrollPosition)
-                        binding.rvMovies.layoutManager = layoutManager
-                        binding.rvMovies.adapter = adapter
-                        binding.rvMovies.setHasFixedSize(true)
-                        binding.mainProgressBar.visibility = View.GONE
-                        binding.fetchMoreProgressBar.visibility = View.GONE
-                    }
-                    is NetworkResult.Error -> {
-                        binding.mainProgressBar.visibility = View.GONE
-                        Toast.makeText(
-                            this,
-                            networkResult.error.message.toString(),
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
-                        binding.fetchMoreProgressBar.visibility = View.GONE
-                    }
-                }
-            }
+//            viewModel.getMovies().observe(this) { networkResult ->
+//                when (networkResult) {
+//                    is NetworkResult.Loading -> {
+//                        if (viewModel.moviesList.isNotEmpty()) {
+//                            binding.fetchMoreProgressBar.visibility = View.VISIBLE
+//                        }
+//                    }
+//                    is NetworkResult.Success -> {
+//                        viewModel.moviesList.addAll(networkResult.data.results!!)
+//                        adapter.submitList(viewModel.moviesList)
+//                        val scrollPosition =
+//                            viewModel.moviesList.size - networkResult.data.results!!.size - 1
+//                        layoutManager.scrollToPosition(scrollPosition)
+//                        binding.rvMovies.layoutManager = layoutManager
+//                        binding.rvMovies.adapter = adapter
+//                        binding.rvMovies.setHasFixedSize(true)
+//                        binding.mainProgressBar.visibility = View.GONE
+//                        binding.fetchMoreProgressBar.visibility = View.GONE
+//                    }
+//                    is NetworkResult.Error -> {
+//                        binding.mainProgressBar.visibility = View.GONE
+//                        Toast.makeText(
+//                            this,
+//                            networkResult.error.message.toString(),
+//                            Toast.LENGTH_LONG
+//                        )
+//                            .show()
+//                        binding.fetchMoreProgressBar.visibility = View.GONE
+//                    }
+//                }
+//            }
 
             binding.rvMovies.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
