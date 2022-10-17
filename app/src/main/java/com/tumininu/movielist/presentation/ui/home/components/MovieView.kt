@@ -35,16 +35,6 @@ fun MovieView(movie: Movie, modifier: Modifier = Modifier) {
                     .align(Alignment.CenterHorizontally)
                     .clip(RoundedCornerShape(10.dp))
             )
-//            GlideImage(
-//                imageModel = "https://image.tmdb.org/t/p/original" + movie.poster_path,
-//                imageOptions = ImageOptions(contentScale = ContentScale.Crop),
-//                modifier = modifier
-//                    .width(125.dp)
-//                    .height(200.dp)
-//                    .clip(RoundedCornerShape(10.dp))
-//                    .align(Alignment.CenterHorizontally),
-//                previewPlaceholder = R.drawable.image,
-//            )
             Spacer(modifier = modifier.height(8.dp))
             Text(
                 text = movie.title,
