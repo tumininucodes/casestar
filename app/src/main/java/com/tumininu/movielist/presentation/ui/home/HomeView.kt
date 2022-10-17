@@ -47,9 +47,17 @@ fun HomeView(modifier: Modifier = Modifier) {
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = PaddingValues(8.dp)
                     ) {
-                        items(data.data.results) { movie ->
-                            MovieView(movie)
+//                        repeat(data.data.results.size) {
+//                            item {
+//                                MovieView(data.data.results[it])
+//                            }
+//                        }
+                        items(data.data.results.size, key = { it }) {
+                            MovieView(movie = data.data.results[it])
                         }
+//                        items(data.data.results) { movie ->
+//                            MovieView(movie)
+//                        }
                     }
                 }
                 is NetworkResult.Error -> {
