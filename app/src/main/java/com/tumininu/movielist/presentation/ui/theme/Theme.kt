@@ -11,7 +11,7 @@ private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,
     secondary = Teal200,
-    background = Dark,
+    background = Black,
     onPrimary = White
     /* Other default colors to override
     surface = Color.White,
@@ -27,12 +27,12 @@ private val DarkColorPalette = darkColors(
 fun MovieListTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val systemUiController = rememberSystemUiController()
     val colors = if (darkTheme) {
-        systemUiController.setStatusBarColor(color = Dark, darkIcons = false)
-        systemUiController.setNavigationBarColor(color = Dark)
+        systemUiController.setStatusBarColor(color = Black, darkIcons = false)
+        systemUiController.setNavigationBarColor(color = Black)
         DarkColorPalette
     } else {
-        systemUiController.setStatusBarColor(color = Dark, darkIcons = false)
-        systemUiController.setNavigationBarColor(color = Dark)
+        systemUiController.setStatusBarColor(color = Black, darkIcons = false)
+        systemUiController.setNavigationBarColor(color = Black)
         DarkColorPalette
     }
 

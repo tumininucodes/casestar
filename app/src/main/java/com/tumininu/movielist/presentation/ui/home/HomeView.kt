@@ -1,5 +1,6 @@
 package com.tumininu.movielist.presentation.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,6 +17,8 @@ import androidx.compose.ui.unit.sp
 import com.tumininu.movielist.model.NetworkResult
 import com.tumininu.movielist.presentation.HomeViewModel
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
+import com.tumininu.movielist.presentation.ui.theme.Black
+import com.tumininu.movielist.presentation.ui.theme.White
 
 @Composable
 fun HomeView(modifier: Modifier = Modifier) {
@@ -23,9 +26,9 @@ fun HomeView(modifier: Modifier = Modifier) {
     val viewModel = remember { HomeViewModel() }
 
     Scaffold(topBar = {
-        TopAppBar {
+        TopAppBar(backgroundColor = Black) {
             Spacer(modifier = modifier.width(8.dp))
-            Text(text = "Casestar", fontSize = 22.sp)
+            Text(text = "Casestar", fontSize = 22.sp, color = White)
         }
     }) { padding ->
         val data = viewModel.getMovies().collectAsState().value

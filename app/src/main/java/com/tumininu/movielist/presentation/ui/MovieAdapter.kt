@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.tumininu.movielist.R
 import com.tumininu.movielist.model.Movie
 
@@ -37,8 +36,8 @@ class MovieAdapter(val context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = getItem(position)
-        Glide.with(context).load("https://image.tmdb.org/t/p/original" + movie.poster_path)
-            .into(holder.image)
+//        Glide.with(context).load("https://image.tmdb.org/t/p/original" + movie.poster_path)
+//            .into(holder.image)
         holder.title.text = movie.title
         holder.overview.text = movie.overview
         holder.releaseDate.text = context.getString(R.string.release_date, movie.release_date)
