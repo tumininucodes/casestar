@@ -39,7 +39,7 @@ fun NetworkImage(url: String?, modifier: Modifier) {
 
         picasso
             .load(url)
-            .resize(360, 600)
+            .resize(240, 400)
             .centerCrop()
             .onlyScaleDown()
             .placeholder(R.drawable.ic_launcher_foreground)

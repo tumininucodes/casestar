@@ -46,7 +46,7 @@ fun HomeView(modifier: Modifier = Modifier) {
                 }
                 is NetworkResult.Success -> {
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(3),
+                        columns = GridCells.Fixed(4),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         contentPadding = PaddingValues(8.dp)
                     ) {

@@ -21,13 +21,10 @@ fun MovieView(movie: Movie, modifier: Modifier = Modifier) {
     ) {
         Column(
             modifier = modifier
-                .width(120.dp)
         ) {
             NetworkImage(
                 url = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                 modifier = modifier
-                    .width(120.dp)
-                    .height(200.dp)
                     .align(Alignment.CenterHorizontally)
                     .clip(RoundedCornerShape(10.dp))
             )
