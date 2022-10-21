@@ -1,16 +1,20 @@
 package com.tumininu.movielist.presentation.ui.home
 
-import androidx.compose.foundation.background
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,12 +35,23 @@ fun HomeView(modifier: Modifier = Modifier) {
             Text(text = "Casestar", fontSize = 22.sp, color = White)
         }
     }) { padding ->
+
         val data = viewModel.getMovies().collectAsState().value
+        var showFetchMoreProgress = remember { mutableStateOf(false) }
+        var pageCounter = 0
+        val scrollState = rememberLazyListState()
+        // observer when reached end of list
+//        val endOfListReached = remember {
+//            derivedStateOf {
+//                scrollState.isScrolledToEnd()
+//            }
+//        }
+
         Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding(padding),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
         ) {
             when (data) {
                 is NetworkResult.Loading -> {
@@ -45,13 +60,28 @@ fun HomeView(modifier: Modifier = Modifier) {
                     )
                 }
                 is NetworkResult.Success -> {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(4),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        contentPadding = PaddingValues(8.dp)
-                    ) {
-                        items(data.data.results.size, key = { it }) {
-                            MovieView(movie = data.data.results[it])
+                    Column {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(4),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            contentPadding = PaddingValues(8.dp),
+                            modifier = modifier
+                        ) {
+                            items(data.data.results.size, key = { it }) {
+                                MovieView(movie = data.data.results[it])
+                            }
+                            item {
+                                pageCounter++
+                                if (pageCounter > 1) {
+
+                                    showFetchMoreProgress.value = true
+                                    Toast.makeText(
+                                        LocalContext.current,
+                                        "scrolled to end, $pageCounter",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
                     }
                 }
@@ -69,6 +99,20 @@ fun HomeView(modifier: Modifier = Modifier) {
                     }
                 }
             }
+
+            if (showFetchMoreProgress.value) {
+                CircularProgressIndicator(
+                    modifier = modifier
+                        .align(Alignment.CenterHorizontally)
+                )
+
+                Toast.makeText(
+                    LocalContext.current,
+                    "Progress, $pageCounter",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
         }
     }
 }

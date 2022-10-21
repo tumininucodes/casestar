@@ -29,6 +29,7 @@ class HomeViewModel : ViewModel() {
                 val response = ApiClient.retrofitService.fetchMovies(page = page)
                 if (response.isSuccessful && response.body() != null) {
                     _movies.value = NetworkResult.Success(response.body()!!)
+                    moviesList.addAll(response.body()!!.results)
                 } else {
                     _movies.value =
                         NetworkResult.Error(Throwable("Something went wrong. Please try again"))
@@ -37,6 +38,24 @@ class HomeViewModel : ViewModel() {
                 _movies.value = NetworkResult.Error(Throwable("Error fetching movies"))
             }
         }
+    }
+
+    fun fetchMoreMovies(page: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _movies.value = NetworkResult.Loading
+                val response = ApiClient.retrofitService.fetchMovies(page = page)
+                if (response.isSuccessful && response.body() != null) {
+                    _movies.value = NetworkResult.Success(response.body()!!)
+                } else {
+                    _movies.value =
+                        NetworkResult.Error(Throwable("Something went wrong. Please try again"))
+                }
+            } catch (e: Exception) {
+                _movies.value = NetworkResult.Error(Throwable("Error fetching movies"))
+            }
+        }
+
     }
 
     fun getMovies(): StateFlow<NetworkResult<MovieResponse>> {
