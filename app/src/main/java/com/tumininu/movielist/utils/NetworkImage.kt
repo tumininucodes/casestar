@@ -2,14 +2,15 @@ package com.tumininu.movielist.utils
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import com.tumininu.movielist.R
@@ -22,7 +23,6 @@ fun NetworkImage(url: String?, modifier: Modifier) {
 
     DisposableEffect(url) {
         val picasso = Picasso.get()
-
         val target = object : Target {
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
                 drawable = placeHolderDrawable
@@ -39,7 +39,7 @@ fun NetworkImage(url: String?, modifier: Modifier) {
 
         picasso
             .load(url)
-            .resize(240, 400)
+            .resize(180, 300)
             .centerCrop()
             .onlyScaleDown()
             .placeholder(R.drawable.ic_launcher_foreground)
@@ -54,12 +54,21 @@ fun NetworkImage(url: String?, modifier: Modifier) {
     }
 
     if (image != null) {
-        Image(bitmap = image!!, contentDescription = "image")
+        Image(
+            bitmap = image!!,
+            contentDescription = "image",
+            modifier = modifier
+                .width(90.dp)
+                .height(150.dp)
+        )
+
     } else if (drawable != null) {
-        Canvas(modifier = modifier) {
-            drawIntoCanvas { canvas ->
-                drawable!!.draw(canvas.nativeCanvas)
-            }
-        }
+        Image(
+            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            contentDescription = "image",
+            modifier = modifier
+                .width(90.dp)
+                .height(150.dp)
+        )
     }
 }
