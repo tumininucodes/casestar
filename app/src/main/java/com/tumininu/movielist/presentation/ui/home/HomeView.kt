@@ -1,22 +1,21 @@
 package com.tumininu.movielist.presentation.ui.home
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.tumininu.movielist.presentation.HomeViewModel
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.theme.Black
@@ -43,29 +42,22 @@ fun HomeView(modifier: Modifier = Modifier) {
                     .padding(padding),
 //                verticalArrangement = Arrangement.Top,
             ) {
+                LazyColumn {
+                    items(data) {
 
+                    }
+                }
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(3),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     contentPadding = PaddingValues(8.dp),
                     modifier = modifier.fillMaxHeight()
                 ) {
-                    items(data.data.results.size, key = { it }, span = {
-                        GridItemSpan(maxLineSpan)
-                    }) {
-                        MovieView(movie = data.data.results[it])
-                    }
-                    item {
-                        pageCounter++
-                        if (pageCounter > 1) {
-
-                            showFetchMoreProgress.value = true
-                            Toast.makeText(
-                                LocalContext.current,
-                                "scrolled to end, $pageCounter",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+//                    items(data.itemCount) { movie ->
+//                        MovieView(movie = movie)
+//                    }
+                    items(data.itemCount, key = { it }) {
+                        MovieView(movie = data[it]!!)
                     }
                 }
 
