@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModel() {
 
     private val movieRepository = MovieRepository()
-    val movies: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = 100)) {
+    val movies: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = 15)) {
         MovieSource(movieRepository)
     }.flow
 

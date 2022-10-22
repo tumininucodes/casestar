@@ -1,7 +1,6 @@
 package com.tumininu.movielist.presentation.ui.home
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Scaffold
@@ -13,10 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.theme.Black
-import com.tumininu.movielist.presentation.ui.theme.Dark
 import com.tumininu.movielist.presentation.ui.theme.White
 
 @Composable
@@ -33,28 +30,17 @@ fun HomeView(modifier: Modifier = Modifier) {
 
         val data = viewModel.movies.collectAsLazyPagingItems()
 
-        Column(
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(16.dp),
             modifier = modifier
                 .fillMaxSize()
-                .padding(padding),
-            verticalArrangement = Arrangement.Center,
+                .padding(padding)
         ) {
-            LazyColumn {
-                items(data) {
-
-                }
+            items(data.itemCount, key = { it }) {
+                MovieView(movie = data[it]!!)
             }
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(3),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(16.dp),
-                modifier = modifier.fillMaxHeight()
-            ) {
-                items(data.itemCount, key = { it }) {
-                    MovieView(movie = data[it]!!)
-                }
-            }
-
         }
 
     }
