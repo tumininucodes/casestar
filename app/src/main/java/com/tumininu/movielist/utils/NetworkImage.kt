@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.squareup.picasso.Picasso
@@ -39,11 +40,11 @@ fun NetworkImage(url: String?, modifier: Modifier) {
 
         picasso
             .load(url)
-            .resize(180, 300)
+            .resize(360, 600)
             .centerCrop()
             .onlyScaleDown()
             .placeholder(R.drawable.ic_launcher_foreground)
-            .error(R.drawable.image)
+            .error(R.drawable.ic_launcher_foreground)
             .into(target)
 
         onDispose {
@@ -57,9 +58,10 @@ fun NetworkImage(url: String?, modifier: Modifier) {
         Image(
             bitmap = image!!,
             contentDescription = "image",
+            contentScale = ContentScale.Crop,
             modifier = modifier
-                .width(90.dp)
-                .height(150.dp)
+                .width(150.dp)
+                .height(200.dp)
         )
 
     } else if (drawable != null) {
@@ -67,8 +69,8 @@ fun NetworkImage(url: String?, modifier: Modifier) {
             painter = painterResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = "image",
             modifier = modifier
-                .width(90.dp)
-                .height(150.dp)
+                .width(150.dp)
+                .height(200.dp)
         )
     }
 }

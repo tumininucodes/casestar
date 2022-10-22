@@ -16,6 +16,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.theme.Black
+import com.tumininu.movielist.presentation.ui.theme.Dark
 import com.tumininu.movielist.presentation.ui.theme.White
 
 @Composable
@@ -44,9 +45,9 @@ fun HomeView(modifier: Modifier = Modifier) {
                 }
             }
             LazyVerticalGrid(
-                columns = GridCells.Fixed(4),
+                columns = GridCells.Fixed(3),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(8.dp),
+                contentPadding = PaddingValues(16.dp),
                 modifier = modifier.fillMaxHeight()
             ) {
                 items(data.itemCount, key = { it }) {

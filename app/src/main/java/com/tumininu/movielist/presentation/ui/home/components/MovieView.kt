@@ -26,21 +26,20 @@ fun MovieView(movie: Movie, modifier: Modifier = Modifier) {
             NetworkImage(
                 url = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                 modifier = modifier
-                    .width(90.dp)
+//                    .width(90.dp)
                     .align(Alignment.CenterHorizontally)
-                    .clip(RoundedCornerShape(10.dp))
             )
-            Spacer(modifier = modifier.height(8.dp))
-            Text(
-                text = movie.title,
-                fontSize = 11.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = modifier
-                    .align(Alignment.Start)
-                    .padding(horizontal = 8.dp)
-            )
-            Spacer(modifier = modifier.height(8.dp))
+//            Spacer(modifier = modifier.height(8.dp))
+//            Text(
+//                text = movie.title,
+//                fontSize = 11.sp,
+//                maxLines = 1,
+//                overflow = TextOverflow.Ellipsis,
+//                modifier = modifier
+//                    .align(Alignment.Start)
+//                    .padding(horizontal = 8.dp)
+//            )
+//            Spacer(modifier = modifier.height(8.dp))
         }
     }
 }
