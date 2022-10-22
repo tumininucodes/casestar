@@ -14,9 +14,9 @@ class MovieSource(
             val movieListResponse = movieRepository.getPopularMovies(nextPage)
 
             LoadResult.Page(
-                data = (movieListResponse.value as NetworkResult<MovieResponse>),
+                data = movieListResponse.body()?.results ?: listOf(),
                 prevKey = if (nextPage == 1) null else nextPage - 1,
-                nextKey = movieListResponse.page.plus(1)
+                nextKey = movieListResponse.body()?.page?.plus(1)
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
