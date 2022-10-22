@@ -7,4 +7,4 @@ Displays a list of popular movies on tmdb
 * Material Design
 
 ## App Screenshot
-![Casestar](https://github.com/tumininucodes/casestar/blob/master/Screenshot%202022-10-22%20at%2018.32.13.png)
+![Casestar](https://github.com/tumininucodes/casestar/blob/master/Screenshot%202022-10-22%20at%2018.32.13.webp)
