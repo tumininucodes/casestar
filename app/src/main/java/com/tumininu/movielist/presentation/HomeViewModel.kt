@@ -3,9 +3,9 @@ package com.tumininu.movielist.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tumininu.movielist.data.ApiClient
-import com.tumininu.movielist.model.Movie
-import com.tumininu.movielist.model.MovieResponse
-import com.tumininu.movielist.model.NetworkResult
+import com.tumininu.movielist.domain.model.Movie
+import com.tumininu.movielist.domain.model.MovieResponse
+import com.tumininu.movielist.domain.model.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

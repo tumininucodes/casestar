@@ -1,4 +1,4 @@
-package com.tumininu.movielist.model
+package com.tumininu.movielist.domain.model
 
 data class Movie(
     var id: Int = 0,

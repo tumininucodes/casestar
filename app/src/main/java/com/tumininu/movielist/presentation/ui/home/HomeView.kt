@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tumininu.movielist.model.NetworkResult
+import com.tumininu.movielist.domain.model.NetworkResult
 import com.tumininu.movielist.presentation.HomeViewModel
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.theme.Black
@@ -47,71 +47,84 @@ fun HomeView(modifier: Modifier = Modifier) {
 //            }
 //        }
 
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(padding),
-            verticalArrangement = Arrangement.Top,
-        ) {
-            when (data) {
-                is NetworkResult.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = modifier.align(Alignment.CenterHorizontally)
-                    )
-                }
-                is NetworkResult.Success -> {
-                    Column {
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(4),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            contentPadding = PaddingValues(8.dp),
-                            modifier = modifier
-                        ) {
-                            items(data.data.results.size, key = { it }) {
-                                MovieView(movie = data.data.results[it])
-                            }
-                            item {
-                                pageCounter++
-                                if (pageCounter > 1) {
+        Column {
+            Column(
+                modifier = modifier
+//                .fillMaxSize()
+                    .padding(padding),
+//                verticalArrangement = Arrangement.Top,
+            ) {
+                when (data) {
+                    is NetworkResult.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
+                    is NetworkResult.Success -> {
+                        Column {
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(3),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                contentPadding = PaddingValues(8.dp),
+                                modifier = modifier.fillMaxHeight()
+                            ) {
+                                items(data.data.results.size, key = { it }, span = {
+                                    GridItemSpan(maxLineSpan)
+                                }) {
+                                    MovieView(movie = data.data.results[it])
+                                }
+                                item {
+                                    pageCounter++
+                                    if (pageCounter > 1) {
 
-                                    showFetchMoreProgress.value = true
-                                    Toast.makeText(
-                                        LocalContext.current,
-                                        "scrolled to end, $pageCounter",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                        showFetchMoreProgress.value = true
+                                        Toast.makeText(
+                                            LocalContext.current,
+                                            "scrolled to end, $pageCounter",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                is NetworkResult.Error -> {
-                    Text(
-                        "Error fetching movies", modifier = modifier
-                            .align(Alignment.CenterHorizontally),
-                        textAlign = TextAlign.Center
-                    )
-                    Button(
-                        onClick = { viewModel.fetchMovies() },
-                        modifier = modifier.align(Alignment.CenterHorizontally)
-                    ) {
-                        Text(text = "Retry")
+                    is NetworkResult.Error -> {
+                        Text(
+                            "Error fetching movies", modifier = modifier
+                                .align(Alignment.CenterHorizontally),
+                            textAlign = TextAlign.Center
+                        )
+                        Button(
+                            onClick = { viewModel.fetchMovies() },
+                            modifier = modifier.align(Alignment.CenterHorizontally)
+                        ) {
+                            Text(text = "Retry")
+                        }
                     }
                 }
+
+
+//            if (showFetchMoreProgress.value) {
+//                CircularProgressIndicator(
+//                    modifier = modifier
+//                        .height(100.dp)
+//                        .align(Alignment.CenterHorizontally)
+//                )
+//
+//                Toast.makeText(
+//                    LocalContext.current,
+//                    "Progress, $pageCounter",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+
             }
 
-            if (showFetchMoreProgress.value) {
-                CircularProgressIndicator(
-                    modifier = modifier
-                        .align(Alignment.CenterHorizontally)
-                )
-
-                Toast.makeText(
-                    LocalContext.current,
-                    "Progress, $pageCounter",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            CircularProgressIndicator(
+                modifier = modifier
+                    .height(100.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
 
         }
     }

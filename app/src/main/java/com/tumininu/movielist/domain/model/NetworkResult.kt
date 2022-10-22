@@ -1,4 +1,4 @@
-package com.tumininu.movielist.model
+package com.tumininu.movielist.domain.model
 
 sealed class NetworkResult<out T> {
     data class Success<out T>(val data: T) : NetworkResult<T>()

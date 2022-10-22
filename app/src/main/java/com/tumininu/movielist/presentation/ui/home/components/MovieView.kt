@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tumininu.movielist.model.Movie
+import com.tumininu.movielist.domain.model.Movie
 import com.tumininu.movielist.utils.NetworkImage
 
 @Composable
@@ -26,6 +26,7 @@ fun MovieView(movie: Movie, modifier: Modifier = Modifier) {
             NetworkImage(
                 url = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                 modifier = modifier
+                    .width(90.dp)
                     .align(Alignment.CenterHorizontally)
                     .clip(RoundedCornerShape(10.dp))
             )

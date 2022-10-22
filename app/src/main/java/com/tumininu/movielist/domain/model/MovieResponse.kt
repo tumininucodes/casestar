@@ -1,4 +1,4 @@
-package com.tumininu.movielist.model
+package com.tumininu.movielist.domain.model
 
 data class MovieResponse(
     var page: Int?,

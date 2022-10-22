@@ -2,7 +2,7 @@ package com.tumininu.movielist.data
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.tumininu.movielist.model.MovieResponse
+import com.tumininu.movielist.domain.model.MovieResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

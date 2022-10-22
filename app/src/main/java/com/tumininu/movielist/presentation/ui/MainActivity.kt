@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tumininu.movielist.data.NetworkUtil
 import com.tumininu.movielist.databinding.ActivityMainBinding
-import com.tumininu.movielist.model.NetworkResult
+import com.tumininu.movielist.domain.model.NetworkResult
 import com.tumininu.movielist.presentation.HomeViewModel
 
 class MainActivity : AppCompatActivity() {

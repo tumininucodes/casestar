@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tumininu.movielist.R
-import com.tumininu.movielist.model.Movie
+import com.tumininu.movielist.domain.model.Movie
 
 class MovieAdapter(val context: Context) :
     ListAdapter<Movie, MovieAdapter.ViewHolder>(MOVIE_COMPARATOR) {
