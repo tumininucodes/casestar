@@ -41,7 +41,7 @@ fun NetworkImage(url: String?, modifier: Modifier) {
 
         picasso
             .load(url)
-            .resize(360, 600)
+            .resize(480, 800)
             .centerCrop()
             .onlyScaleDown()
             .placeholder(R.drawable.ic_launcher_foreground)
@@ -67,7 +67,8 @@ fun NetworkImage(url: String?, modifier: Modifier) {
 
     } else if (drawable != null) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            painter = painterResource(id = R.drawable.ic_outline_image_24),
+            contentScale = ContentScale.Inside,
             contentDescription = "image",
             modifier = modifier
                 .width(150.dp)

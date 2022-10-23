@@ -68,6 +68,7 @@ dependencies {
     implementation "androidx.compose.material:material:1.2.1"
     implementation "androidx.compose.runtime:runtime:1.2.1"
     implementation "androidx.compose.ui:ui:1.2.1"
+    implementation "androidx.compose.ui:ui-util:1.2.1"
 
     // Accompanist System UI controller
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
