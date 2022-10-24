@@ -1,5 +1,6 @@
 package com.tumininu.movielist.presentation.ui.home.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,12 +14,13 @@ import com.tumininu.movielist.domain.model.Movie
 import com.tumininu.movielist.utils.NetworkImage
 
 @Composable
-fun MovieView(movie: Movie, modifier: Modifier = Modifier) {
+fun MovieView(movie: Movie, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Box(
         modifier = modifier
             .padding(top = 8.dp, bottom = 8.dp)
             .height(200.dp)
             .width(150.dp)
+            .clickable { onClick() }
             .clip(RoundedCornerShape(10.dp))
     ) {
         NetworkImage(
