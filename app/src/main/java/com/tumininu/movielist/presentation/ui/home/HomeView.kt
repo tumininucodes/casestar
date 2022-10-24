@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -53,6 +54,7 @@ fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel) {
 
         val data = viewModel.movies.collectAsLazyPagingItems()
         val density = LocalDensity.current
+        val listState = rememberLazyGridState()
 
         AnimatedVisibility(
             visible = viewModel.navigateToAboutMovie.value,
@@ -72,6 +74,7 @@ fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel) {
 
         if (viewModel.navigateToAboutMovie.value.not()) {
             LazyVerticalGrid(
+                state = listState,
                 columns = GridCells.Fixed(3),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(16.dp),
