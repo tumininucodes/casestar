@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import com.tumininu.movielist.domain.model.Movie
 import com.tumininu.movielist.utils.NetworkImage
 
-@androidx.compose.Composable
 @Composable
 fun AboutMovie(movie: Movie, modifier: Modifier = Modifier) {
 
