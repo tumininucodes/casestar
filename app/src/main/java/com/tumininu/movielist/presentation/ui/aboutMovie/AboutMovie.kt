@@ -16,12 +16,6 @@ fun AboutMovie(
     modifier: Modifier = Modifier,
 ) {
     Column {
-        NetworkImage(
-            url = "https://image.tmdb.org/t/p/original" + movie.poster_path,
-            modifier = modifier
-                .height(400.dp)
-                .width(400.dp)
-        )
         Text(text = movie.title)
         Text(text = movie.overview.toString())
         Text(text = movie.release_date.toString())
