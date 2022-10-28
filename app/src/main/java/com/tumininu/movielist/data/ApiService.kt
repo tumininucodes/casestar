@@ -3,10 +3,12 @@ package com.tumininu.movielist.data
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tumininu.movielist.domain.model.MovieResponse
+import com.tumininu.movielist.domain.model.MovieVideosResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -15,8 +17,16 @@ interface ApiService {
     suspend fun fetchMovies(
         @Query("api_key") apiKey: String = "703b66873479afc02f4d7afd1ae87125",
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int
+        @Query("page") page: Int,
     ): Response<MovieResponse>
+
+    @GET("movie/{movieId}/videos")
+    suspend fun fetchMovieVideos(
+        @Path("movieId") movieId: String,
+        @Query("api_key") apiKey: String = "703b66873479afc02f4d7afd1ae87125",
+        @Query("language") language: String = "en-US",
+    ): Response<MovieVideosResponse>
+
 }
 
 object ApiClient {
