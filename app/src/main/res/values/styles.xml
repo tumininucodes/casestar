@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ExoStyledControls.Custom" parent="ExoStyledControls">
+        <item name="show_next_button">false</item>
+        <item name="show_previous_button">false</item>
+    </style>
+</resources>

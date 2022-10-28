@@ -1,5 +1,7 @@
 package com.tumininu.movielist.presentation.ui.home
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,6 +16,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -21,14 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.tumininu.movielist.R
+import com.tumininu.movielist.presentation.AboutMovieActivity
 import com.tumininu.movielist.presentation.ui.MainViewModel
-import com.tumininu.movielist.presentation.ui.aboutMovie.AboutMovie
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.theme.Black
 import com.tumininu.movielist.presentation.ui.theme.White
 
 @Composable
-fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel) {
+fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel, activity: Activity) {
 
     Scaffold(topBar = {
         TopAppBar(backgroundColor = Black) {
@@ -56,21 +59,24 @@ fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel) {
         val density = LocalDensity.current
         val listState = rememberLazyGridState()
 
-        AnimatedVisibility(
-            visible = viewModel.navigateToAboutMovie.value,
-            enter = slideInHorizontally {
-                with(density) { -40.dp.roundToPx() }
-            } + expandVertically(
-                expandFrom = Alignment.Top
-            ) + fadeIn(
-                initialAlpha = 0.3f
-            ),
-            exit = slideOutHorizontally() + shrinkVertically() + fadeOut()
-        ) {
-            viewModel.currentMovie?.let {
-                AboutMovie(movie = it)
-            }
-        }
+//        AnimatedVisibility(
+//            visible = viewModel.navigateToAboutMovie.value,
+//            enter = slideInHorizontally {
+//                with(density) { -40.dp.roundToPx() }
+//            } + expandVertically(
+//                expandFrom = Alignment.Top
+//            ) + fadeIn(
+//                initialAlpha = 0.3f
+//            ),
+//            exit = slideOutHorizontally() + shrinkVertically() + fadeOut()
+//        ) {
+//            val intent = Intent(activity, AboutMovieActivity::class.java)
+//            intent.putExtra("movie", viewModel.currentMovie)
+//            LocalContext.current.startActivity(intent)
+////            viewModel.currentMovie?.let {
+////                AboutMovie(movie = it)
+////            }
+//        }
 
         if (viewModel.navigateToAboutMovie.value.not()) {
             LazyVerticalGrid(
@@ -85,8 +91,11 @@ fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel) {
             ) {
                 items(data.itemCount, key = { it }) {
                     MovieView(movie = data[it]!!, onClick = {
-                        viewModel.navigateToAboutMovie.value = true
+//                        viewModel.navigateToAboutMovie.value = true
                         viewModel.currentMovie = data[it]
+                        val intent = Intent(activity, AboutMovieActivity::class.java)
+                        intent.putExtra("movie", viewModel.currentMovie)
+                        activity.startActivity(intent)
                     })
                 }
             }

@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "MovieList"
+rootProject.name = "Casestar"
 include ':app'
 //include ':shared-elements'

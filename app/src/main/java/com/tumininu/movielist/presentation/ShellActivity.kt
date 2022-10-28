@@ -26,18 +26,18 @@ class ShellActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
 
-                    HomeView(viewModel = viewModel)
+                    HomeView(viewModel = viewModel, activity = this)
                 }
             }
         }
     }
 
     override fun onBackPressed() {
-        if (viewModel.navigateToAboutMovie.value) {
-            viewModel.navigateToAboutMovie.value = false
-        } else {
-            super.onBackPressed()
-        }
+//        if (viewModel.navigateToAboutMovie.value) {
+//            viewModel.navigateToAboutMovie.value = false
+//        } else {
+        super.onBackPressed()
+//        }
 
     }
 }

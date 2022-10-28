@@ -11,8 +11,10 @@ import com.tumininu.movielist.domain.model.Movie
 import com.tumininu.movielist.utils.NetworkImage
 
 @Composable
-fun AboutMovie(movie: Movie, modifier: Modifier = Modifier) {
-
+fun AboutMovie(
+    movie: Movie,
+    modifier: Modifier = Modifier,
+) {
     Column {
         NetworkImage(
             url = "https://image.tmdb.org/t/p/original" + movie.poster_path,
@@ -25,5 +27,5 @@ fun AboutMovie(movie: Movie, modifier: Modifier = Modifier) {
         Text(text = movie.release_date.toString())
 
     }
-
 }
+
