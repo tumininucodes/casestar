@@ -38,6 +38,7 @@ class AboutMovieActivity : ComponentActivity() {
     private var playbackPosition = 0L
     private lateinit var videoId: String
     private lateinit var videoView: PlayerView
+    private lateinit var progressView: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,7 @@ class AboutMovieActivity : ComponentActivity() {
             ViewModelProvider.NewInstanceFactory()
         )[MainViewModel::class.java]
 
-        val progressView = findViewById<ProgressBar>(R.id.progress)
+        progressView = findViewById(R.id.progress)
 
         val movieTitle = findViewById<TextView>(R.id.movieTitle)
         movieTitle.text = movie.title
@@ -69,14 +70,12 @@ class AboutMovieActivity : ComponentActivity() {
                         lifecycleScope.launch(Dispatchers.Main) {
                             videoView.visibility = View.VISIBLE
                             initializePlayer()
-                            progressView.visibility = View.GONE
                         }
                     } else {
                         videoId = officialTrailer.first().key.toString()
                         lifecycleScope.launch(Dispatchers.Main) {
                             videoView.visibility = View.VISIBLE
                             initializePlayer()
-                            progressView.visibility = View.GONE
                         }
                     }
                 }
@@ -144,6 +143,7 @@ class AboutMovieActivity : ComponentActivity() {
                             exoPlayer.playWhenReady = playWhenReady
                             exoPlayer.seekTo(currentItem, playbackPosition)
                             exoPlayer.prepare()
+                            progressView.visibility = View.GONE
                         }
 
                     } catch (e: ExtractionException) {
