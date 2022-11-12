@@ -61,7 +61,7 @@ class AboutMovieActivity : ComponentActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.getMovieVideos(movieId = movie.id.toString()).collect { videosResponse ->
-                if (videosResponse != null) {
+                if (videosResponse != null && videosResponse.results.isNotEmpty()) {
                     val officialTrailer = videosResponse.results.filter {
                         it.name?.contains("official trailer", ignoreCase = true) == true
                     }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "806876655808",
+    "project_id": "casestar",
+    "storage_bucket": "casestar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806876655808:android:b8513834a3f086558b3d25",
+        "android_client_info": {
+          "package_name": "com.tumininu.movielist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806876655808-n8g1deb8b6j4l0lalk1v5q20ijhhqpjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAORQ7z6HMz9u76p4SCWqc-xBo9BDv3v_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806876655808-n8g1deb8b6j4l0lalk1v5q20ijhhqpjr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 def mediaVersion = "1.0.0-alpha03"
@@ -76,6 +78,13 @@ dependencies {
 
     // Accompanist System UI controller
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
