@@ -31,13 +31,4 @@ class ShellActivity : ComponentActivity() {
             }
         }
     }
-
-    override fun onBackPressed() {
-//        if (viewModel.navigateToAboutMovie.value) {
-//            viewModel.navigateToAboutMovie.value = false
-//        } else {
-        super.onBackPressed()
-//        }
-
-    }
 }
