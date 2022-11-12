@@ -14,7 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieList">
         <activity
-            android:name=".presentation.AboutMovieActivity"
+            android:name=".presentation.ui.search.SearchActivity"
+            android:exported="false"
+            android:label="@string/title_activity_search"
+            android:theme="@style/Theme.MovieList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".presentation.ui.aboutMovie.AboutMovieActivity"
             android:exported="false"
             android:label="@string/title_activity_about_movie"
             android:theme="@style/Theme.MovieList">
@@ -23,7 +32,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".presentation.ShellActivity"
+            android:name=".presentation.ui.home.ShellActivity"
             android:exported="true"
             android:label="@string/title_activity_shell"
             android:theme="@style/Theme.MovieList">

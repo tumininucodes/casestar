@@ -1,4 +1,4 @@
-package com.tumininu.movielist.presentation
+package com.tumininu.movielist.presentation.ui.aboutMovie
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -22,8 +22,7 @@ import com.github.kotvertolet.youtubejextractor.exception.ExtractionException
 import com.github.kotvertolet.youtubejextractor.exception.YoutubeRequestException
 import com.tumininu.movielist.R
 import com.tumininu.movielist.domain.model.Movie
-import com.tumininu.movielist.presentation.ui.MainViewModel
-import com.tumininu.movielist.presentation.ui.aboutMovie.AboutMovie
+import com.tumininu.movielist.presentation.MainViewModel
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

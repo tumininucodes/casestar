@@ -1,4 +1,4 @@
-package com.tumininu.movielist.presentation
+package com.tumininu.movielist.presentation.ui.home
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.tumininu.movielist.presentation.ui.MainViewModel
-import com.tumininu.movielist.presentation.ui.home.HomeView
+import com.tumininu.movielist.presentation.MainViewModel
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 
 class ShellActivity : ComponentActivity() {
@@ -25,7 +24,6 @@ class ShellActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-
                     HomeView(viewModel = viewModel, activity = this)
                 }
             }
