@@ -2,6 +2,7 @@ package com.tumininu.movielist.domain.repository
 
 import com.tumininu.movielist.data.ApiClient
 import com.tumininu.movielist.domain.model.MovieResponse
+import com.tumininu.movielist.domain.model.MovieSearchResponse
 import com.tumininu.movielist.domain.model.MovieVideosResponse
 import retrofit2.Response
 
@@ -15,5 +16,8 @@ class MovieRepository {
         return ApiClient.retrofitService.fetchMovieVideos(movieId = movieId)
     }
 
+    suspend fun searchMovie(query: String): Response<MovieSearchResponse> {
+        return ApiClient.retrofitService.searchMovie(query = query)
+    }
 
 }

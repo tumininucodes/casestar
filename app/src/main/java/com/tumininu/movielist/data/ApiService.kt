@@ -2,7 +2,9 @@ package com.tumininu.movielist.data
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.tumininu.movielist.BuildConfig
 import com.tumininu.movielist.domain.model.MovieResponse
+import com.tumininu.movielist.domain.model.MovieSearchResponse
 import com.tumininu.movielist.domain.model.MovieVideosResponse
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -15,7 +17,7 @@ interface ApiService {
 
     @GET("movie/popular")
     suspend fun fetchMovies(
-        @Query("api_key") apiKey: String = "703b66873479afc02f4d7afd1ae87125",
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "en-US",
         @Query("page") page: Int,
     ): Response<MovieResponse>
@@ -23,15 +25,23 @@ interface ApiService {
     @GET("movie/{movieId}/videos")
     suspend fun fetchMovieVideos(
         @Path("movieId") movieId: String,
-        @Query("api_key") apiKey: String = "703b66873479afc02f4d7afd1ae87125",
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "en-US",
     ): Response<MovieVideosResponse>
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = "en-US",
+        @Query("query") query: String,
+        @Query("include_adult") include_adult: Boolean = false,
+    ): Response<MovieSearchResponse>
 
 }
 
 object ApiClient {
 
-    val moshi = Moshi.Builder()
+    private val moshi: Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 

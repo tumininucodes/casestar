@@ -20,18 +20,42 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tumininu.movielist.domain.model.MovieSearchResponse
+import com.tumininu.movielist.domain.model.NetworkResult
+import com.tumininu.movielist.presentation.SearchViewModel
 import com.tumininu.movielist.presentation.ui.theme.Dark
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
-fun Search(state: MutableState<TextFieldValue>) {
-
+fun Search(
+    state: MutableState<TextFieldValue>,
+    viewModel: SearchViewModel,
+    data: MutableState<NetworkResult<MovieSearchResponse>>,
+) {
     val focusRequester = remember { FocusRequester() }
 
     TextField(
         value = state.value,
         onValueChange = { value ->
             state.value = value
+            CoroutineScope(Dispatchers.IO).launch {
+                viewModel.searchMovie(state.value.text).collect { response ->
+                    when (response) {
+                        is NetworkResult.Loading -> {
+                            data.value = response
+                        }
+                        is NetworkResult.Success -> {
+                            data.value = response
+                        }
+                        is NetworkResult.Error -> {
+                            data.value = response
+                        }
+                    }
+                }
+            }
+
         },
         modifier = Modifier
             .focusRequester(focusRequester)

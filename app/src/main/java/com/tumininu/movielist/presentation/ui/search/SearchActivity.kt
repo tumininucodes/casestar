@@ -7,17 +7,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
+import com.tumininu.movielist.presentation.SearchViewModel
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 
 class SearchActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[SearchViewModel::class.java]
+
         setContent {
             MovieListTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
-                    SearchView()
+                    SearchView(viewModel = viewModel, activity = this)
                 }
             }
         }
