@@ -3,6 +3,7 @@ package com.tumininu.movielist.presentation.ui.aboutMovie
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.ComponentActivity
@@ -16,6 +17,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.AspectRatioFrameLayout
+import androidx.media3.ui.AspectRatioFrameLayout.ResizeMode
 import androidx.media3.ui.PlayerView
 import com.github.kotvertolet.youtubejextractor.YoutubeJExtractor
 import com.github.kotvertolet.youtubejextractor.exception.ExtractionException
@@ -50,12 +53,13 @@ class AboutMovieActivity : ComponentActivity() {
         )[MainViewModel::class.java]
 
         progressView = findViewById(R.id.progress)
-
-        val movieTitle = findViewById<TextView>(R.id.movieTitle)
-        movieTitle.text = movie.title
-
+        val ivBack = findViewById<ImageView>(R.id.closeAboutMovie)
         videoView = findViewById(R.id.video_view)
         videoView.player = player
+
+        ivBack.setOnClickListener {
+            finish()
+        }
 
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.getMovieVideos(movieId = movie.id.toString()).collect { videosResponse ->

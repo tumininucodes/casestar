@@ -2,27 +2,26 @@ package com.tumininu.movielist.presentation.ui.home
 
 import android.app.Activity
 import android.content.Intent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.tumininu.movielist.R
 import com.tumininu.movielist.presentation.MainViewModel
+import com.tumininu.movielist.presentation.ui.aboutApp.AboutAppActivity
 import com.tumininu.movielist.presentation.ui.aboutMovie.AboutMovieActivity
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.search.SearchActivity
@@ -32,30 +31,49 @@ import com.tumininu.movielist.presentation.ui.theme.White
 @Composable
 fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel, activity: Activity) {
 
+    val showOptionsMenu = remember { mutableStateOf(false) }
+
     Scaffold(topBar = {
-        TopAppBar(backgroundColor = Black) {
-            Spacer(modifier = modifier.width(8.dp))
-            Text(text = "Casestar",
-                fontSize = 22.sp,
-                color = White,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis)
-            Spacer(modifier = modifier.fillMaxWidth(0.88f))
-            Column {
-                Spacer(modifier = modifier.height(8.dp))
-                Image(painter = painterResource(id = R.drawable.ic_round_search_24),
-                    contentDescription = "Search",
-                    modifier = modifier
-                        .size(40.dp)
-                        .background(color = Black)
-                        .clip(RoundedCornerShape(size = 4.dp))
-                        .clickable {
+        TopAppBar(
+            title = {
+                Text(text = "Casestar",
+                    fontSize = 22.sp,
+                    color = White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+            },
+            backgroundColor = Black,
+            actions = {
+                Column {
+                    Spacer(modifier = modifier.height(2.dp))
+                    IconButton(
+                        onClick = {
                             activity.startActivity(Intent(activity, SearchActivity::class.java))
-                        }
-                        .padding(5.dp)
-                )
+                        },
+                        modifier = modifier.size(40.dp)
+                    ) {
+                        Icon(Icons.Default.Search, "Search", tint = Color.White)
+                    }
+                }
+                IconButton(
+                    onClick = { showOptionsMenu.value = !showOptionsMenu.value },
+                    modifier = modifier.size(40.dp)
+                ) {
+                    Icon(Icons.Default.MoreVert, "More", tint = Color.White)
+                }
+                DropdownMenu(
+                    expanded = showOptionsMenu.value,
+                    onDismissRequest = { showOptionsMenu.value = false },
+                ) {
+                    DropdownMenuItem(onClick = {
+                        activity.startActivity(Intent(activity, AboutAppActivity::class.java))
+                        showOptionsMenu.value = false
+                    }) {
+                        Text(text = "About")
+                    }
+                }
             }
-        }
+        )
     }) { padding ->
 
         val data = viewModel.movies.collectAsLazyPagingItems()
@@ -65,7 +83,7 @@ fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel, activity: 
             state = listState,
             columns = GridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp),
             modifier = modifier
                 .fillMaxSize()
                 .background(Black)

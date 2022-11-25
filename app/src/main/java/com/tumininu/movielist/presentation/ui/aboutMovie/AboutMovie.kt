@@ -1,5 +1,6 @@
 package com.tumininu.movielist.presentation.ui.aboutMovie
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,10 +8,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tumininu.movielist.domain.model.Movie
+import com.tumininu.movielist.presentation.ui.theme.Black
+import com.tumininu.movielist.presentation.ui.theme.Dark
+import com.tumininu.movielist.presentation.ui.theme.Dark2
 import com.tumininu.movielist.utils.NetworkImage
 
 @Composable
@@ -18,15 +23,15 @@ fun AboutMovie(
     movie: Movie,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.padding(16.dp)) {
-
-        Text(text = "Description", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-        Spacer(modifier.height(5.dp))
+    Column(modifier = modifier
+        .background(Black)
+        .padding(horizontal = 16.dp)) {
+        Text(text = movie.title, fontWeight = FontWeight.Bold, fontSize = 21.sp)
+        Spacer(modifier.height(14.dp))
         Text(text = movie.overview.toString())
         Spacer(modifier.height(20.dp))
 
         Row {
-
             NetworkImage(
                 url = "https://image.tmdb.org/t/p/original" + movie.poster_path,
                 modifier = modifier

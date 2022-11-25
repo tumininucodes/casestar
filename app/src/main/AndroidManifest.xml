@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieList">
         <activity
+            android:name=".presentation.ui.aboutApp.AboutAppActivity"
+            android:exported="false"
+            android:label="@string/title_activity_about_app"
+            android:theme="@style/Theme.MovieList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".presentation.ui.search.SearchActivity"
             android:exported="false"
             android:label="@string/title_activity_search"
