@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.tumininu.movielist.domain.model.Movie
-import com.tumininu.movielist.domain.model.MovieSource
-import com.tumininu.movielist.domain.model.MovieVideosResponse
+import com.tumininu.movielist.domain.model.*
 import com.tumininu.movielist.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,5 +31,22 @@ class MainViewModel : ViewModel() {
             }
         }
         return movieVideos
+    }
+
+    fun getCast(movieId: String): MutableStateFlow<NetworkResult<CastResponse>> {
+        val castResponse = MutableStateFlow<NetworkResult<CastResponse>>(NetworkResult.Loading)
+        viewModelScope.launch {
+            try {
+                val response = movieRepository.getCast(movieId)
+                if (response.isSuccessful && response.body() != null) {
+                    castResponse.emit(NetworkResult.Success(response.body()!!))
+                } else {
+                    castResponse.emit(NetworkResult.Error(Throwable(response.code().toString())))
+                }
+            } catch (e: Exception) {
+                castResponse.emit(NetworkResult.Error(e))
+            }
+        }
+        return castResponse
     }
 }

@@ -5,26 +5,36 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.Util
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.AspectRatioFrameLayout
-import androidx.media3.ui.AspectRatioFrameLayout.ResizeMode
 import androidx.media3.ui.PlayerView
 import com.github.kotvertolet.youtubejextractor.YoutubeJExtractor
 import com.github.kotvertolet.youtubejextractor.exception.ExtractionException
 import com.github.kotvertolet.youtubejextractor.exception.YoutubeRequestException
 import com.tumininu.movielist.R
+import com.tumininu.movielist.domain.model.CastResponse
 import com.tumininu.movielist.domain.model.Movie
+import com.tumininu.movielist.domain.model.NetworkResult
 import com.tumininu.movielist.presentation.MainViewModel
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 import kotlinx.coroutines.Dispatchers
@@ -47,10 +57,8 @@ class AboutMovieActivity : ComponentActivity() {
 
         val movie = intent.getSerializableExtra("movie") as Movie
 
-        val viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[MainViewModel::class.java]
+        val viewModel = ViewModelProvider(this,
+            ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
 
         progressView = findViewById(R.id.progress)
         val ivBack = findViewById<ImageView>(R.id.closeAboutMovie)
@@ -90,7 +98,29 @@ class AboutMovieActivity : ComponentActivity() {
             MovieListTheme {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
-                    AboutMovie(movie = movie)
+                    Column(Modifier.verticalScroll(rememberScrollState())) {
+                        AboutMovie(movie = movie)
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(text = "Cast")
+                        val cast = viewModel.getCast(movieId = movie.id.toString()).collectAsState()
+                        when (cast.value) {
+                            is NetworkResult.Loading -> {
+                                CircularProgressIndicator()
+                            }
+                            is NetworkResult.Success -> {
+                                LazyRow(content = {
+                                    items(items = (cast.value
+                                            as NetworkResult.Success<CastResponse>).data.cast) {
+                                        Text(text = it.name.toString())
+                                    }
+                                })
+                            }
+                            is NetworkResult.Error -> {
+                                Text(text = (cast.value as NetworkResult.Error).error.toString())
+                            }
+                        }
+                    }
+
                 }
             }
         }
@@ -130,19 +160,17 @@ class AboutMovieActivity : ComponentActivity() {
 
     @SuppressLint("StaticFieldLeak")
     private fun initializePlayer() {
-        player = ExoPlayer.Builder(this)
-            .build()
-            .also { exoPlayer ->
-                videoView.player = exoPlayer
-                val youtubeJExtractor = YoutubeJExtractor()
-                lifecycleScope.launch(Dispatchers.IO) {
-                    try {
-                        val streamingData = youtubeJExtractor.extract(videoId).streamingData!!
-                        val video = streamingData.muxedStreams.first()
-                        lifecycleScope.launch(Dispatchers.Main) {
-                            val mediaItem = MediaItem.fromUri(video.url)
-                            exoPlayer.setMediaItem(mediaItem)
-                            exoPlayer.playWhenReady = playWhenReady
+        player = ExoPlayer.Builder(this).build().also { exoPlayer ->
+            videoView.player = exoPlayer
+            val youtubeJExtractor = YoutubeJExtractor()
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val streamingData = youtubeJExtractor.extract(videoId).streamingData!!
+                    val video = streamingData.muxedStreams.first()
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        val mediaItem = MediaItem.fromUri(video.url)
+                        exoPlayer.setMediaItem(mediaItem)
+                        exoPlayer.playWhenReady = playWhenReady
                             exoPlayer.seekTo(currentItem, playbackPosition)
                             exoPlayer.prepare()
                             progressView.visibility = View.GONE
