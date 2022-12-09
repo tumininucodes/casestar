@@ -6,22 +6,20 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
@@ -92,35 +90,31 @@ class AboutMovieActivity : ComponentActivity() {
             }
         }
 
-
-        val aboutView = findViewById<ComposeView>(R.id.composable)
-        aboutView.setContent {
+        val composeView = findViewById<ComposeView>(R.id.composable)
+        composeView.setContent {
             MovieListTheme {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
+
                     Column(Modifier.verticalScroll(rememberScrollState())) {
                         AboutMovie(movie = movie)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(text = "Cast")
-                        val cast = viewModel.getCast(movieId = movie.id.toString()).collectAsState()
-                        when (cast.value) {
-                            is NetworkResult.Loading -> {
-                                CircularProgressIndicator()
-                            }
-                            is NetworkResult.Success -> {
-                                LazyRow(content = {
-                                    items(items = (cast.value
-                                            as NetworkResult.Success<CastResponse>).data.cast) {
-                                        Text(text = it.name.toString())
-                                    }
-                                })
-                            }
-                            is NetworkResult.Error -> {
-                                Text(text = (cast.value as NetworkResult.Error).error.toString())
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(text = "Cast",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 21.sp,
+                            modifier = Modifier.padding(horizontal = 16.dp))
+
+                        val data: MutableState<NetworkResult<CastResponse>> =
+                            remember { mutableStateOf(NetworkResult.Loading) }
+                        lifecycleScope.launch {
+                            viewModel.getCast(movie.id.toString()).collect {
+                                data.value = it
                             }
                         }
-                    }
 
+                        CastView(data)
+
+                    }
                 }
             }
         }
@@ -171,20 +165,20 @@ class AboutMovieActivity : ComponentActivity() {
                         val mediaItem = MediaItem.fromUri(video.url)
                         exoPlayer.setMediaItem(mediaItem)
                         exoPlayer.playWhenReady = playWhenReady
-                            exoPlayer.seekTo(currentItem, playbackPosition)
-                            exoPlayer.prepare()
-                            progressView.visibility = View.GONE
-                        }
-
-                    } catch (e: ExtractionException) {
-                        // Something really bad happened, nothing we can do except just show
-                        // some error notification to the user
-                    } catch (e: YoutubeRequestException) {
-                        // Possibly there are some connection problems, ask user to check
-                        // the internet connection and then retry
+                        exoPlayer.seekTo(currentItem, playbackPosition)
+                        exoPlayer.prepare()
+                        progressView.visibility = View.GONE
                     }
+
+                } catch (e: ExtractionException) {
+                    // Something really bad happened, nothing we can do except just show
+                    // some error notification to the user
+                } catch (e: YoutubeRequestException) {
+                    // Possibly there are some connection problems, ask user to check
+                    // the internet connection and then retry
                 }
             }
+        }
     }
 
     private fun releasePlayer() {

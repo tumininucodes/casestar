@@ -9,6 +9,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.tumininu.movielist.domain.model.*
 import com.tumininu.movielist.domain.repository.MovieRepository
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -23,6 +24,8 @@ class MainViewModel : ViewModel() {
 
     var currentMovie: Movie? = null
 
+    private val castResponse = MutableStateFlow<NetworkResult<CastResponse>>(NetworkResult.Loading)
+
     fun getMovieVideos(movieId: String): MutableStateFlow<MovieVideosResponse?> {
         viewModelScope.launch {
             val response = movieRepository.getMovieVideos(movieId)
@@ -34,7 +37,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun getCast(movieId: String): MutableStateFlow<NetworkResult<CastResponse>> {
-        val castResponse = MutableStateFlow<NetworkResult<CastResponse>>(NetworkResult.Loading)
         viewModelScope.launch {
             try {
                 val response = movieRepository.getCast(movieId)
