@@ -33,7 +33,7 @@ fun SearchView(modifier: Modifier = Modifier, viewModel: SearchViewModel, activi
         remember { mutableStateOf(NetworkResult.Loading) }
 
     Column(modifier.fillMaxSize()) {
-        Search(textState, viewModel, data)
+        Search(activity, textState, viewModel, data)
         when (data.value) {
             is NetworkResult.Loading -> {
                 if (textState.value.text.isNotEmpty()) {

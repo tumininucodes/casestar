@@ -33,10 +33,11 @@ fun AboutAppView(activity: Activity, modifier: Modifier = Modifier) {
             IconButton(onClick = { activity.finish() }) {
                 Icon(Icons.Default.ArrowBack, "Back", tint = White)
             }
-            Text(text = "About Casestar",
+            Text(
+                text = "About Casestar",
                 fontSize = 21.sp,
                 color = White,
-                fontWeight = FontWeight.Bold)
+            )
         }
     }) { padding ->
         Column(modifier = modifier.padding(padding)) {
@@ -57,7 +58,7 @@ fun AboutAppView(activity: Activity, modifier: Modifier = Modifier) {
                             .size(90.dp)
                             .clip(CircleShape))
                     Spacer(modifier = modifier.height(12.dp))
-                    Text(text = "Tumi Ojo", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Tumi Ojo", fontSize = 20.sp)
                 }
             }
 

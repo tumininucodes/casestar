@@ -1,10 +1,13 @@
 package com.tumininu.movielist.presentation.ui.search.components
 
+import android.app.Activity
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -30,6 +33,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Search(
+    activity: Activity,
     state: MutableState<TextFieldValue>,
     viewModel: SearchViewModel,
     data: MutableState<NetworkResult<MovieSearchResponse>>,
@@ -63,11 +67,14 @@ fun Search(
         textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
         leadingIcon = {
             Icon(
-                Icons.Default.Search,
+                Icons.Default.ArrowBack,
                 contentDescription = "",
                 modifier = Modifier
                     .padding(15.dp)
                     .size(24.dp)
+                    .clickable {
+                        activity.finish()
+                    }
             )
         },
         trailingIcon = {

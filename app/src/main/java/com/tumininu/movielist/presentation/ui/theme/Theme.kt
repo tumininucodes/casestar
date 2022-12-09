@@ -3,7 +3,6 @@ package com.tumininu.movielist.presentation.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -24,15 +23,21 @@ private val DarkColorPalette = darkColors(
 
 
 @Composable
-fun MovieListTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun MovieListTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    showStatusBar: Boolean = true,
+    content: @Composable () -> Unit,
+) {
     val systemUiController = rememberSystemUiController()
     val colors = if (darkTheme) {
         systemUiController.setStatusBarColor(color = Black, darkIcons = false)
         systemUiController.setNavigationBarColor(color = Black)
+        systemUiController.isStatusBarVisible = showStatusBar
         DarkColorPalette
     } else {
         systemUiController.setStatusBarColor(color = Black, darkIcons = false)
         systemUiController.setNavigationBarColor(color = Black)
+        systemUiController.isStatusBarVisible = showStatusBar
         DarkColorPalette
     }
 
