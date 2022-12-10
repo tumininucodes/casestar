@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +35,7 @@ import com.tumininu.movielist.domain.model.CastResponse
 import com.tumininu.movielist.domain.model.Movie
 import com.tumininu.movielist.domain.model.NetworkResult
 import com.tumininu.movielist.presentation.MainViewModel
+import com.tumininu.movielist.presentation.ui.aboutMovie.components.AboutMovie
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,6 +51,7 @@ class AboutMovieActivity : ComponentActivity() {
     private lateinit var videoView: PlayerView
     private lateinit var progressView: ProgressBar
 
+    @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about_movie)
@@ -96,23 +99,27 @@ class AboutMovieActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
 
-                    Column(Modifier.verticalScroll(rememberScrollState())) {
-                        AboutMovie(movie = movie)
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(text = "Cast",
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 21.sp,
-                            modifier = Modifier.padding(horizontal = 16.dp))
+                    Box(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        Column {
 
-                        val data: MutableState<NetworkResult<CastResponse>> =
-                            remember { mutableStateOf(NetworkResult.Loading) }
-                        lifecycleScope.launch {
-                            viewModel.getCast(movie.id.toString()).collect {
-                                data.value = it
+                            AboutMovie(movie = movie)
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(text = "Cast",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 21.sp,
+                                modifier = Modifier.padding(horizontal = 16.dp))
+
+                            val data: MutableState<NetworkResult<CastResponse>> =
+                                remember { mutableStateOf(NetworkResult.Loading) }
+                            lifecycleScope.launch {
+                                viewModel.getCast(movie.id.toString()).collect {
+                                    data.value = it
+                                }
                             }
-                        }
 
-                        CastView(data)
+                            CastView(data)
+
+                        }
 
                     }
                 }
