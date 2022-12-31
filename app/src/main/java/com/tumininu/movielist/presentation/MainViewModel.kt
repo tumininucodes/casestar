@@ -1,7 +1,5 @@
 package com.tumininu.movielist.presentation
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -9,7 +7,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.tumininu.movielist.domain.model.*
 import com.tumininu.movielist.domain.repository.MovieRepository
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
