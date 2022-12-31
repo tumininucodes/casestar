@@ -20,7 +20,6 @@ fun CastView(data: MutableState<NetworkResult<CastResponse>>) {
         is NetworkResult.Success -> {
             LazyRow(contentPadding = PaddingValues(8.dp), content = {
                 items(items = (data.value as NetworkResult.Success<CastResponse>).data.cast) {
-//                        Text(text = it.name.toString())
                     ActorView(name = it.name.toString(),
                         image = it.profile_path.toString(),
                         character = it.character.toString())

@@ -27,9 +27,14 @@ import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.search.SearchActivity
 import com.tumininu.movielist.presentation.ui.theme.Black
 import com.tumininu.movielist.presentation.ui.theme.White
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeView(modifier: Modifier = Modifier, viewModel: MainViewModel, activity: Activity) {
+fun HomeView(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = koinViewModel(),
+    activity: Activity,
+) {
 
     val showOptionsMenu = remember { mutableStateOf(false) }
 

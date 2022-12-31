@@ -39,6 +39,7 @@ import com.tumininu.movielist.presentation.ui.aboutMovie.components.AboutMovie
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 
 class AboutMovieActivity : ComponentActivity() {
@@ -51,15 +52,12 @@ class AboutMovieActivity : ComponentActivity() {
     private lateinit var videoView: PlayerView
     private lateinit var progressView: ProgressBar
 
-    @OptIn(ExperimentalComposeUiApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about_movie)
 
         val movie = intent.getSerializableExtra("movie") as Movie
-
-        val viewModel = ViewModelProvider(this,
-            ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+        val viewModel: MainViewModel by inject()
 
         progressView = findViewById(R.id.progress)
         val ivBack = findViewById<ImageView>(R.id.closeAboutMovie)

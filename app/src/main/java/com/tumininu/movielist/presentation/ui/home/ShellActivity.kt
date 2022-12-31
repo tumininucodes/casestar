@@ -12,19 +12,16 @@ import com.tumininu.movielist.presentation.MainViewModel
 import com.tumininu.movielist.presentation.ui.theme.MovieListTheme
 
 class ShellActivity : ComponentActivity() {
-    lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            viewModel = remember { MainViewModel() }
             MovieListTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    HomeView(viewModel = viewModel, activity = this)
+                    HomeView(activity = this)
                 }
             }
         }

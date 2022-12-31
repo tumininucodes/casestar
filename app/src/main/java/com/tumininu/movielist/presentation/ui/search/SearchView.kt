@@ -24,9 +24,14 @@ import com.tumininu.movielist.presentation.ui.aboutMovie.AboutMovieActivity
 import com.tumininu.movielist.presentation.ui.home.components.MovieView
 import com.tumininu.movielist.presentation.ui.search.components.Search
 import com.tumininu.movielist.presentation.ui.theme.Black
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SearchView(modifier: Modifier = Modifier, viewModel: SearchViewModel, activity: Activity) {
+fun SearchView(
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = koinViewModel(),
+    activity: Activity,
+) {
     val textState = remember { mutableStateOf(TextFieldValue("")) }
     val listState = rememberLazyGridState()
     val data: MutableState<NetworkResult<MovieSearchResponse>> =

@@ -9,9 +9,8 @@ import com.tumininu.movielist.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
-    private val movieRepository = MovieRepository()
     var currentMovie: Movie? = null
 
     fun searchMovie(query: String): MutableStateFlow<NetworkResult<MovieSearchResponse>> {

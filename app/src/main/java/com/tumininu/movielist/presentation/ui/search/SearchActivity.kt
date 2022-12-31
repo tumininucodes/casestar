@@ -15,17 +15,12 @@ class SearchActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[SearchViewModel::class.java]
-
         setContent {
             MovieListTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background) {
-                    SearchView(viewModel = viewModel, activity = this)
+                    SearchView(activity = this)
                 }
             }
         }

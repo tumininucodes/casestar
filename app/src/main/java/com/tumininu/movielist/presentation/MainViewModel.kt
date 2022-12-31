@@ -14,14 +14,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
-    private val movieRepository = MovieRepository()
     val movies: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = 15)) {
         MovieSource(movieRepository)
     }.flow
     private val movieVideos = MutableStateFlow<MovieVideosResponse?>(null)
-
     var currentMovie: Movie? = null
 
     private val castResponse = MutableStateFlow<NetworkResult<CastResponse>>(NetworkResult.Loading)
